@@ -1,80 +1,198 @@
-/* 페이지 전체 스타일과 게임 UI 디자인 */
-
+/* Global Styles */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
   margin: 0;
   padding: 20px;
-  gap: 16px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 h1 {
   margin: 0;
-  font-size: 24px;
+  color: #2c3e50;
+  font-size: 2.5rem;
 }
 
-.button-container {
+p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+/* Layout */
+.main-container {
   display: flex;
-  gap: 10px;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-button:hover {
-  background-color: #f0f0f0;
+h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #555;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Control Section */
+.control-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.canvas-container {
+.webcam-wrapper {
   position: relative;
-  display: inline-block;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-#canvas {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+#webcam-canvas {
   display: block;
 }
 
-#max-prediction {
+#pose-prediction {
   position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
   color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 16px;
+  padding: 8px;
+  text-align: center;
   font-weight: bold;
-  pointer-events: none;
 }
 
 #label-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 200px;
+  margin-top: 15px;
+  width: 100%;
 }
 
 #label-container div {
+  background: #f8f9fa;
+  margin-bottom: 5px;
   padding: 8px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  text-align: center;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.guide-text {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  background: #eef2f5;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.guide-text p {
+  margin: 5px 0;
+}
+
+/* Game Section */
+.game-section {
+  min-width: 440px; /* Canvas width + padding */
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.score-box { color: #2ecc71; }
+.timer-box { color: #e74c3c; }
+.life-box { letter-spacing: 2px; }
+
+.game-canvas-wrapper {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+#game-canvas {
+  background: #cce0ff; /* Sky blue background */
+  border-radius: 12px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+#overlay-title {
+  font-size: 3rem;
+  margin: 0 0 10px;
+  color: #fff;
+  border: none;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+#overlay-msg {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #ddd;
+}
+
+button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none !important;
 }
